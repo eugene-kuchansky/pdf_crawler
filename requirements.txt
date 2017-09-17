@@ -1,0 +1,5 @@
+Django==1.11.5
+pdfminer.six==20170720
+pycryptodome==3.4.7
+pytz==2017.2
+six==1.10.0

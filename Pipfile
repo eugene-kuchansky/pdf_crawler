@@ -1,0 +1,13 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+
+[packages]
+Django = "1.11.5"
+pdfminer.six = "20170720"
+pycryptodome = "3.4.7"
+pytz = "2017.2"
+six = "1.10.0"
+
+[requires]
+python_version = "2.7"
