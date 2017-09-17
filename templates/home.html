@@ -6,12 +6,6 @@
   </head>
   <body>
     <form action="{% url 'add_file' %}" method='post' enctype="multipart/form-data">{% csrf_token %}
-        <label for="file_name">File:</label><br />
-        <input type="text" name='file_name' id='file_name'>
-        <br />
-        <label for="links">Links:</label><br />
-        <textarea name='links' id='links'></textarea>
-        <br />
         <label for="file">File:</label><br />
         <input type="file" name="file" id="file">
         <br />
