@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+from settings_base import *
 
 if os.environ.get('SITE_CONFIG') == 'LOCAL':
     from settings_dev import *
