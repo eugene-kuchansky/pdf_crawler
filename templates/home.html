@@ -5,7 +5,7 @@
     <title>Add file</title>
   </head>
   <body>
-    <form action="{% url 'add_file' %}" method='post' enctype="multipart/form-data">{% csrf_token %}
+    <form action="{% url 'add_file' %}" method='post' enctype="multipart/form-data">
         <label for="file">File:</label><br />
         <input type="file" name="file" id="file">
         <br />

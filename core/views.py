@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from .models import PDFFile, Link
 from .pdf_parser import pdf_parse
 from .link_validator import validate
@@ -11,7 +12,7 @@ from .link_validator import validate
 def home(request):
     return render(request, 'home.html')
 
-    
+@csrf_exempt
 def add_file(request):
     if request.method != 'POST':
         return HttpResponse(status=405)
@@ -22,8 +23,8 @@ def add_file(request):
     if 'file' not in request.FILES:
         return JsonResponse({'error': 'No file specified'}, status=400)
 
-    if request.FILES['file'].content_type != 'application/pdf':
-        return JsonResponse({'error': 'Invalid file type'}, status=400)
+    #if request.FILES['file'].content_type != 'application/pdf':
+    #    return JsonResponse({'error': 'Invalid file type: {}'.format(request.FILES['file'].content_type)}, status=400)
  
     # get file urls
     #urls = set(request.POST['links'].splitlines())
@@ -122,4 +123,15 @@ def links(request):
             } for link in links
         ]
     }
+    return JsonResponse(response)
+
+
+def clean(request):
+    if request.method != 'GET':
+        return HttpResponse(status=405)
+    
+    Link.objects.all().delete()
+    PDFFile.objects.all().delete()
+    response = {'message': 'DB sucessfully cleaned'}
+    
     return JsonResponse(response)
