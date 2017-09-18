@@ -1,3 +1,55 @@
-1. parse pdf for links
-2. add link verification
-3. heroku deployment
+Project is deployed to https://secure-garden-15443.herokuapp.com/
+
+
+REQUIREMENTS
+
+Pyhton2.7
+For pdf processing pdfminer.six is used.
+DB for dev - Sqlite
+DB for prod(Heroku) - Postgres
+To run project locally you have to specify a flag for local config. No flag is required for runnign in Heroku
+$ export SITE_CONFIG=LOCAL;python manage.py runserver
+
+See requirements.txt for all of required libraries.
+
+
+USAGE
+
+1. Form to upload file from browser:
+https://secure-garden-15443.herokuapp.com/ - form to upload file from browser
+
+2. Upload file, method POST:
+https://secure-garden-15443.herokuapp.com/add_file/ - 
+Example of usage:
+$ curl -F 'file=@test1.pdf' https://secure-garden-15443.herokuapp.com/add_file/
+Response:
+{"links": [{"id": 1, "url": "http://google.com/"}, {"id": 2, "url": "http://test.sss/"}], "id": 2, "name": "test1.pdf"}
+
+3. Get list of all uploaded files, method GET:
+https://secure-garden-15443.herokuapp.com/files/
+Example of usage:
+$ curl https://secure-garden-15443.herokuapp.com/files/
+Response:
+{"files": [{"id": 1, "name": "Untitled 1.pdf", "num_links": 2}, {"id": 2, "name": "test1.pdf", "num_links": 2}]}
+
+4. Get file information, method GET:
+https://secure-garden-15443.herokuapp.com/files/<file_id>/
+Example of usage:
+$ curl https://secure-garden-15443.herokuapp.com/files/2/
+Response:
+{"links": [{"id": 1, "is_alive": true, "url": "http://google.com/"}, {"id": 2, "is_alive": false, "url": "http://test.sss/"}], "id": 2, "name": "test1.pdf"}
+
+5. Get list of all links, method GET:
+https://secure-garden-15443.herokuapp.com/links/
+Example of usage:
+$ curl https://secure-garden-15443.herokuapp.com/links/
+Response:
+{"links": [{"id": 1, "is_alive": true, "url": "http://google.com/", "num_files": 2}, {"id": 2, "is_alive": false, "url": "http://test.sss/", "num_files": 2}]}
+
+
+DETAILS
+
+For real world app it is more preferable to use transactions while inserting new links to DB.
+Now number of links in uploaded file is not limited. It's better to insert them by chunks.
+Links validation is performed with threads since this way is much faster than checking one by one.
+There is better way to handle complex configuration files splitted into dev/prod versions.
