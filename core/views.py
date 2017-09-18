@@ -85,16 +85,22 @@ def files(request, file_id=None):
             'id':pdf_file.id,
             'name': pdf_file.name,
             'links': [
-                {'id': link.id, 'url': link.url} 
-                    for link in pdf_file.link_set.all()
+                {
+                    'id': link.id, 
+                    'url': link.url,
+                    'is_alive': link.is_alive,
+                } for link in pdf_file.link_set.all()
             ]
         }
     else:
         pdf_files = PDFFile.objects.all()
         response = {
             'files': [
-                {'id': pdf_file.id, 'name': pdf_file.name, 'num_links': len(pdf_file.link_set.all())}
-                    for pdf_file in pdf_files
+                {
+                    'id': pdf_file.id, 
+                    'name': pdf_file.name, 
+                    'num_links': len(pdf_file.link_set.all())
+                } for pdf_file in pdf_files
             ]
         }
     return JsonResponse(response)
@@ -108,8 +114,12 @@ def links(request):
 
     response = {
         'links': [
-            {'id': link.id, 'url': link.url, 'num_files': len(link.pdf_file.all())}
-                for link in links
+            {
+                'id': link.id, 
+                'url': link.url, 
+                'num_files': len(link.pdf_file.all()),
+                'is_alive': link.is_alive,
+            } for link in links
         ]
     }
     return JsonResponse(response)
