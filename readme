@@ -46,6 +46,14 @@ $ curl https://secure-garden-15443.herokuapp.com/links/
 Response:
 {"links": [{"id": 1, "is_alive": true, "url": "http://google.com/", "num_files": 2}, {"id": 2, "is_alive": false, "url": "http://test.sss/", "num_files": 2}]}
 
+6. Clean DB, method GET:
+https://secure-garden-15443.herokuapp.com/clean/
+Example of usage:
+$ curl https://secure-garden-15443.herokuapp.com/clean/
+Response:
+{"message": "DB sucessfully cleaned"}
+
+
 
 DETAILS
 
@@ -53,3 +61,5 @@ For real world app it is more preferable to use transactions while inserting new
 Now number of links in uploaded file is not limited. It's better to insert them by chunks.
 Links validation is performed with threads since this way is much faster than checking one by one.
 There is better way to handle complex configuration files splitted into dev/prod versions.
+Links are validated only on inserting. If link is already exist it is not validated again.
+Files are always added to DB on upload, no checks for the file with the same name.

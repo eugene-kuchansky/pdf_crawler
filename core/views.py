@@ -17,18 +17,12 @@ def add_file(request):
     if request.method != 'POST':
         return HttpResponse(status=405)
     
-    #if not request.POST['file_name'] or not request.POST['links'] or 'file' not in request.FILES:
-    #    return JsonResponse({'error': 'No file specified'}, status=400)
-    
     if 'file' not in request.FILES:
         return JsonResponse({'error': 'No file specified'}, status=400)
 
-    #if request.FILES['file'].content_type != 'application/pdf':
-    #    return JsonResponse({'error': 'Invalid file type: {}'.format(request.FILES['file'].content_type)}, status=400)
- 
     # get file urls
-    #urls = set(request.POST['links'].splitlines())
     urls = pdf_parse(request.FILES['file'].file)
+
     if urls is None:
         return JsonResponse({'error': 'Cannot parse pdf file'}, status=400)
     urls = set(urls)
