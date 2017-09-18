@@ -22,10 +22,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '+f88-+hy4ru#bj=oqnu1bu^)mr#0&uo!##2t722r=os^-6v@!y'
+SECRET_KEY = 'i+acxn5(akgsn!sr4^qgf(^m&*@+g1@u^t@=8s@axc41ml*f=s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
@@ -79,6 +79,7 @@ WSGI_APPLICATION = 'pdf_crawler.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'] = {}
 DATABASES['default'].update(db_from_env)
 #DATABASES = {
 #    'default': {
