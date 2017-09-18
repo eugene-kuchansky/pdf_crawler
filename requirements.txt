@@ -4,3 +4,4 @@ pycryptodome==3.4.7
 pytz==2017.2
 six==1.10.0
 gunicorn==19.7.1
+dj-database-url
